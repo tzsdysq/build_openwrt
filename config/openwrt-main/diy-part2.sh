@@ -1,4 +1,21 @@
 #!/bin/bash
+#!/bin/bash
+
+# 修改默认 IP 地址为 10.10.10.1
+sed -i 's/192.168.1.1/10.10.10.1/g' package/base-files/files/bin/config_generate
+
+# 修改主机名为 OpenWrt-X86（不能使用中文）
+sed -i "/uci commit system/i\\uci set system.@system[0].hostname='OpenWrt-X86'" package/lean/default-settings/files/zzz-default-settings
+
+# 清空默认密码（首次登录无需密码）
+sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
+
+# 设置默认语言为中文（zh_cn）
+sed -i 's/luci.main.lang=auto/luci.main.lang=zh_cn/g' feeds/luci/modules/luci-base/root/etc/config/luci
+
+# 设置时区为 Asia/Shanghai
+sed -i 's/UTC/Asia\/Shanghai/g' package/base-files/files/etc/config/system
+
 #========================================================================================================================
 # https://github.com/ophub/amlogic-s9xxx-openwrt
 # Description: Automatically Build OpenWrt
@@ -9,7 +26,7 @@
 # ------------------------------- Main source started -------------------------------
 #
 # Add the default password for the 'root' user（Change the empty password to 'password'）
-sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7:::/g' package/base-files/files/etc/shadow
+#sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7:::/g' package/base-files/files/etc/shadow
 
 # Set etc/openwrt_release
 sed -i "s|DISTRIB_REVISION='.*'|DISTRIB_REVISION='R$(date +%Y.%m.%d)'|g" package/base-files/files/etc/openwrt_release
