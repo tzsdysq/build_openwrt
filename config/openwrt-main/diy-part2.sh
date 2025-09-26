@@ -4,12 +4,6 @@
 # 修改默认 IP 地址为 10.10.10.1
 sed -i 's/192.168.1.1/10.10.10.1/g' package/base-files/files/bin/config_generate
 
-# 修改主机名为 OpenWrt-X86（不能使用中文）
-sed -i "/uci commit system/i\\uci set system.@system[0].hostname='OpenWrt-X86'" package/lean/default-settings/files/zzz-default-settings
-
-# 清空默认密码（首次登录无需密码）
-sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
-
 # 设置默认语言为中文（zh_cn）
 sed -i 's/luci.main.lang=auto/luci.main.lang=zh_cn/g' feeds/luci/modules/luci-base/root/etc/config/luci
 
